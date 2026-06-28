@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Proof Section</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;1,9..144,900&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d1117;
+      --surface:   rgba(255,255,255,0.055);
+      --surface-h: rgba(255,255,255,0.09);
+      --rim:       rgba(255,255,255,0.10);
+      --violet:    #9d7ff4;
+      --star:      #ffbe0b;
+      --check:     #4ade80;
+      --text:      #ede8f7;
+      --muted:     #7a8499;
+      --dim:       #4c566a;
+    }
+
+    body {
+      background-color: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      padding: 5rem 1.5rem;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* decorative blobs */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -160px;
+      left: -160px;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(157,127,244,0.18) 0%, transparent 68%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -140px;
+      right: -140px;
+      width: 480px;
+      height: 480px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,107,160,0.13) 0%, transparent 68%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrapper {
+      max-width: 1160px;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── TOP SECTION ──────────────────────────────────── */
+    .top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+      align-items: center;
+      margin-bottom: 4.5rem;
+    }
+
+    .headline h1 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      font-weight: 900;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.12;
+      letter-spacing: -0.025em;
+      margin-bottom: 1.5rem;
+    }
+
+    .headline h1 em {
+      color: var(--violet);
+      font-style: italic;
+    }
+
+    .headline p {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.75;
+      max-width: 400px;
+    }
+
+    /* rating badges */
+    .ratings {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .badge {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      padding: 0.95rem 1.4rem;
+      background: var(--surface);
+      border: 1px solid var(--rim);
+      border-radius: 14px;
+      transition: background 0.2s;
+      cursor: default;
+    }
+    .badge:hover { background: var(--surface-h); }
+    .badge:nth-child(1) { margin-left: 0; }
+    .badge:nth-child(2) { margin-left: 2.5rem; }
+    .badge:nth-child(3) { margin-left: 5rem; }
+
+    .badge-stars {
+      display: flex;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+    .badge-stars svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--star);
+    }
+
+    .badge-info { display: flex; flex-direction: column; gap: 0.15rem; }
+    .badge-label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .badge-sub {
+      font-size: 0.76rem;
+      color: var(--dim);
+    }
+
+    /* ── CARDS SECTION ────────────────────────────────── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.4rem;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--rim);
+      border-radius: 18px;
+      padding: 1.75rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .card:hover {
+      background: var(--surface-h);
+      transform: translateY(-3px);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: 18px 18px 0 0;
+    }
+    .card:nth-child(1)::before { background: linear-gradient(90deg, #9d7ff4, #c084fc); }
+    .card:nth-child(2)::before { background: linear-gradient(90deg, #f472b6, #fb923c); }
+    .card:nth-child(3)::before { background: linear-gradient(90deg, #38bdf8, #4ade80); }
+
+    .card:nth-child(1) { margin-top: 0; }
+    .card:nth-child(2) { margin-top: 1.75rem; }
+    .card:nth-child(3) { margin-top: 3.5rem; }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #fff;
+    }
+    .card:nth-child(1) .avatar { background: linear-gradient(135deg, #7c3aed, #a855f7); }
+    .card:nth-child(2) .avatar { background: linear-gradient(135deg, #db2777, #f97316); }
+    .card:nth-child(3) .avatar { background: linear-gradient(135deg, #0ea5e9, #22d3ee); }
+
+    .card-meta { display: flex; flex-direction: column; gap: 0.2rem; }
+    .card-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .card-verified {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.73rem;
+      color: var(--check);
+    }
+    .card-verified svg {
+      width: 13px;
+      height: 13px;
+      fill: var(--check);
+      flex-shrink: 0;
+    }
+
+    .card-stars {
+      display: flex;
+      gap: 2px;
+      margin-bottom: 1rem;
+    }
+    .card-stars svg {
+      width: 15px;
+      height: 15px;
+      fill: var(--star);
+    }
+
+    .card-quote {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.72;
+    }
+
+    /* ── ANIMATIONS ────────────────────────────────────── */
+    @media (prefers-reduced-motion: no-preference) {
+      .headline, .badge, .card {
+        opacity: 0;
+        transform: translateY(22px);
+        animation: rise 0.55s cubic-bezier(0.22,1,0.36,1) forwards;
+      }
+      .headline            { animation-delay: 0.05s; }
+      .badge:nth-child(1)  { animation-delay: 0.15s; }
+      .badge:nth-child(2)  { animation-delay: 0.25s; }
+      .badge:nth-child(3)  { animation-delay: 0.35s; }
+      .card:nth-child(1)   { animation-delay: 0.30s; }
+      .card:nth-child(2)   { animation-delay: 0.42s; }
+      .card:nth-child(3)   { animation-delay: 0.54s; }
+
+      @keyframes rise {
+        to { opacity: 1; transform: translateY(0); }
+      }
+    }
+
+    /* ── RESPONSIVE ───────────────────────────────────── */
+    @media (max-width: 860px) {
+      .top { grid-template-columns: 1fr; gap: 2.5rem; }
+      .badge:nth-child(1),
+      .badge:nth-child(2),
+      .badge:nth-child(3) { margin-left: 0; }
+      .cards { grid-template-columns: 1fr; }
+      .card:nth-child(1),
+      .card:nth-child(2),
+      .card:nth-child(3) { margin-top: 0; }
+    }
+
+    @media (max-width: 540px) {
+      body { padding: 3rem 1rem; }
+      .headline h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+
+    <!-- ── TOP ── -->
+    <section class="top">
+      <div class="headline">
+        <h1>10,000+ people<br>trust what we <em>build.</em></h1>
+        <p>From first purchase to loyal fan — our customers have made their voices heard across every major review platform. Here's what they're saying.</p>
+      </div>
+
+      <div class="ratings">
+
+        <div class="badge">
+          <div class="badge-stars" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <div class="badge-info">
+            <span class="badge-label">Rated 5 Stars on Trustpilot</span>
+            <span class="badge-sub">Based on 2,841 verified reviews</span>
+          </div>
+        </div>
+
+        <div class="badge">
+          <div class="badge-stars" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <div class="badge-info">
+            <span class="badge-label">Rated 5 Stars on G2</span>
+            <span class="badge-sub">Based on 1,463 verified reviews</span>
+          </div>
+        </div>
+
+        <div class="badge">
+          <div class="badge-stars" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <div class="badge-info">
+            <span class="badge-label">Rated 5 Stars on Capterra</span>
+            <span class="badge-sub">Based on 987 verified reviews</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── CARDS ── -->
+    <section class="cards">
+
+      <article class="card">
+        <div class="card-top">
+          <div class="avatar" aria-hidden="true">AO</div>
+          <div class="card-meta">
+            <span class="card-name">Amara Osei</span>
+            <span class="card-verified">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2.5" fill="none"/></svg>
+              Verified Buyer
+            </span>
+          </div>
+        </div>
+        <div class="card-stars" aria-label="5 out of 5 stars">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="card-quote">"I was skeptical at first, but after the first order I was completely hooked. The quality is unmatched and delivery was faster than anything I've experienced. Couldn't ask for more!"</p>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <div class="avatar" aria-hidden="true">KN</div>
+          <div class="card-meta">
+            <span class="card-name">Kai Nakamura</span>
+            <span class="card-verified">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2.5" fill="none"/></svg>
+              Verified Buyer
+            </span>
+          </div>
+        </div>
+        <div class="card-stars" aria-label="5 out of 5 stars">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="card-quote">"The support team went above and beyond to solve my issue within hours. That alone made me a lifelong customer. The product itself? Even better than advertised."</p>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <div class="avatar" aria-hidden="true">SR</div>
+          <div class="card-meta">
+            <span class="card-name">Sofia Reyes</span>
+            <span class="card-verified">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2.5" fill="none"/></svg>
+              Verified Buyer
+            </span>
+          </div>
+        </div>
+        <div class="card-stars" aria-label="5 out of 5 stars">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="card-quote">"Everything from the packaging to the product itself felt genuinely thoughtful. An experience that surprised me in the best way. I've already sent the link to all my friends."</p>
+      </article>
+
+    </section>
+  </div>
+</body>
+</html>
